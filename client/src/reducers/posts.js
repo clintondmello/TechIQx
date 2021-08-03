@@ -6,9 +6,12 @@ export default (posts = [], action) => {
     case "CREATE":
       return [...posts, action.payload]; //Getting other posts as well as new post from payload
     case "UPDATE":
+    case "LIKE":
       return posts.map((post) =>
         post._id == action.payload._id ? action.payload : post
       ); //Getting other posts as well as new post from payload
+    case "DELETE":
+      return posts.filter((post) => post._id != action.payload);
     default:
       return posts;
   }
