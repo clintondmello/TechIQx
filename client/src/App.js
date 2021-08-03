@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
   Container,
@@ -10,18 +10,20 @@ import {
   IconButton,
 } from "@material-ui/core";
 import Posts from "./Components/Posts/Posts";
-import Forms from "./Components/Form/Form";
+import Form from "./Components/Form/Form";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
 import { getPosts } from "./actions/posts";
 
 const App = () => {
   const classes = useStyles();
+  const [currentId, setCurrentId] = useState(null);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
     document.body.classList.add(classes.body);
   }, [dispatch]);
+
   return (
     <Container className={classes.mainContainer}>
       <AppBar position="static" className={classes.appBar}>
@@ -38,10 +40,10 @@ const App = () => {
         <Container>
           <Grid container justify="space-between" alignItems="stretch">
             <Grid item xs={12} sm={7}>
-              <Posts></Posts>
+              <Posts setCurrentId={setCurrentId}></Posts>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Forms></Forms>
+              <Form currentId={currentId} setCurrentId={setCurrentId}></Form>
             </Grid>
           </Grid>
         </Container>
